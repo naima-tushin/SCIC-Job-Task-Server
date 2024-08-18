@@ -3,7 +3,7 @@ const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 // middleware
 app.use(cors({
@@ -36,8 +36,8 @@ async function run() {
     
     app.get('/api/products', async (req, res) => {
       try {
-        const page = parseInt(req.query.page, 10) || 0; // Default to 0 if page is not provided
-        const limit = parseInt(req.query.limit, 10) || 10; // Default to 10 if limit is not provided
+        const page = parseInt(req.query.page, 10) || 0; 
+        const limit = parseInt(req.query.limit, 10) || 10; 
     
         // Ensure page and limit are valid numbers
         if (page < 0 || limit <= 0) {
@@ -53,16 +53,19 @@ async function run() {
           .find()
           .skip(page * limit)
           .limit(limit)
-          .toArray(); // Use toArray() instead of forEach() for better handling
-    
-        res.status(200).json({ products, totalProducts, totalPages });
+          .toArray(); 
+
+        res.status(200).json({ 
+          products, 
+          totalProducts, 
+          totalPages, 
+          
+        });
       } catch (err) {
         res.status(500).json({ message: 'Error fetching products', err });
       }
     });
-    
-
-
+  
     // Create a new user
     app.post('/api/users', async (req, res) => {
       try {
