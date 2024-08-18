@@ -47,7 +47,6 @@ async function run() {
         const totalProducts = await productCollection.countDocuments();
         const totalPages = Math.ceil(totalProducts / limit);
 
-        // Fetch products with pagination
         const products = await productCollection
           .find()
           .skip(page * limit)
@@ -70,7 +69,6 @@ async function run() {
       try {
         const { email, name, imageUrl } = req.body;
 
-        // Validate input fields
         if (!email || !name || !imageUrl) {
           return res.status(400).json({ message: 'Email, name, and imageUrl are required' });
         }
