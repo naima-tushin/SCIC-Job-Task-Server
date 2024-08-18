@@ -7,7 +7,7 @@ const port = process.env.PORT || 5001;
 
 // middleware
 app.use(cors({
-  origin: ['http://localhost:5000', 'http://localhost:5173', 'https://scic-job-task-tushin.web.app'],
+  origin: ['http://localhost:5000', 'http://localhost:5001', 'http://localhost:5173', 'https://scic-job-task-tushin.web.app', 'https://scic-job-task-server-fkp1opp6h-naima-tushins-projects.vercel.app'],
 }));
 app.use(express.json());
 
