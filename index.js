@@ -32,39 +32,39 @@ async function run() {
     const productCollection = database.collection("product");
     const userCollection = database.collection("User");
 
-    
+
     app.get('/api/products', async (req, res) => {
       try {
-        const page = parseInt(req.query.page, 10) || 0; 
-        const limit = parseInt(req.query.limit, 10) || 10; 
-    
+        const page = parseInt(req.query.page, 10) || 0;
+        const limit = parseInt(req.query.limit, 10) || 10;
+
         // Ensure page and limit are valid numbers
         if (page < 0 || limit <= 0) {
           return res.status(400).json({ message: 'Invalid page or limit values' });
         }
-    
+
         // Count total products
         const totalProducts = await productCollection.countDocuments();
         const totalPages = Math.ceil(totalProducts / limit);
-    
+
         // Fetch products with pagination
         const products = await productCollection
           .find()
           .skip(page * limit)
           .limit(limit)
-          .toArray(); 
+          .toArray();
 
-        res.status(200).json({ 
-          products, 
-          totalProducts, 
-          totalPages, 
-          
+        res.status(200).json({
+          products,
+          totalProducts,
+          totalPages,
+
         });
       } catch (err) {
         res.status(500).json({ message: 'Error fetching products', err });
       }
     });
-  
+
     // Create a new user
     app.post('/api/users', async (req, res) => {
       try {
@@ -76,7 +76,6 @@ async function run() {
         }
 
         const newUser = { email, name, imageUrl };
-
         const result = await userCollection.insertOne(newUser);
         res.status(201).json({ message: 'User created successfully', userId: result.insertedId });
       } catch (err) {
